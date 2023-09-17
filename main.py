@@ -4,11 +4,8 @@ from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon, QPixmap
 from PyQt6.QtWidgets import QWidget, QApplication, QPushButton, QGridLayout
 
-# from pathlib import Path
-# from typing import Optional
-
-from addapp import AddApp
-from filemanager import FileManager
+from classes.addapp import AddApp
+from classes.filemanager import FileManager
 
 class Window(QWidget):
 	def __init__(self) -> None:
@@ -24,7 +21,6 @@ class Window(QWidget):
 
 	def initUI(self) -> None:
 		# self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-
 		self.grid_layout = QGridLayout()
 		self.setLayout(self.grid_layout)
 		self.refreshUI()
@@ -43,11 +39,10 @@ class Window(QWidget):
 
 		self.grid_layout.addWidget(button, 0, self.count)
 
-
 	def refreshUI(self) -> None:
-		for i, key in enumerate(self.apps):
-			self.count += 1
+		for _, key in enumerate(self.apps):
 			self.buttonBuilder(self.apps[key]["path"], self.apps[key]["icon"])
+			self.count += 1
 
 		add_app = QPushButton("Add app")
 		add_app.clicked.connect(self.addApp)
@@ -59,11 +54,6 @@ class Window(QWidget):
 
 	def runProgram(self, f) -> None:
 		subprocess.run(f, shell=True)
-		# cwd = f"{os.getcwd()}\\apps\\"
-		# apps = os.listdir(cwd)
-		# apps2 = [Path(app).stem for app in apps]
-		# f = apps[ int([idx for idx, elem in enumerate(apps2) if f == elem][0])]
-		# subprocess.run(f"{cwd}{f}", shell=True)
 
 	def addApp(self) -> None:
 		self.window = AddApp(self)
