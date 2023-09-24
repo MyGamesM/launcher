@@ -41,19 +41,20 @@ class AddApp(QWidget):
 
 			apps[name] = {
 				"path" : self.program_path,
-				"icon" : self.icon_path
+				"icon" : self.parent.fm.encodeImage(self.parent.fm.loadImage(self.icon_path))
 			}
 		except:
 			self.showErrorLabel("Please select a file and icon")
 			return
 
 		self.parent.fm.writeFile(apps)
-		self.parent.buttonBuilder(self.program_path, self.icon_path)
+		self.parent.buttonBuilder(apps[name]["path"], apps[name]["icon"])
 		self.close()
 
 	def openFileDialog(self, type: int):
 		select_file = QFileDialog(self)
-		select_file.setDirectory(f"{expanduser('~')}/Desktop")
+		# select_file.setDirectory(f"{expanduser('~')}/Desktop")
+		select_file.setDirectory(f"{expanduser('~')}/Documents/Projects/launcher/demo")
 		select_file.setFileMode(QFileDialog.FileMode.ExistingFile)
 
 		if type == 0: select_file.setNameFilter("Programs (*.exe)")

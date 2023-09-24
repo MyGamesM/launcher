@@ -1,4 +1,4 @@
-import sys, subprocess
+import sys, subprocess, base64
 
 from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon, QPixmap
@@ -32,7 +32,7 @@ class Window(QWidget):
 		button.clicked.connect(lambda: self.runProgram(path))
 		# Set button icon
 		qpixmap = QPixmap()
-		qpixmap.loadFromData(self.fm.loadImage(icon))
+		qpixmap.loadFromData(self.fm.decodeImage(icon))
 		button_icon = QIcon(qpixmap)
 		button.setIcon(button_icon)
 		button.setIconSize(QSize(70, 70))

@@ -1,4 +1,4 @@
-import os
+import os, base64
 
 class FileManager:
 	def __init__(self, file: str) -> None:
@@ -26,10 +26,16 @@ class FileManager:
 				return f.read()
 			
 		elif self.file.endswith(".json"):
-			from json import loads
+			from json import load
 			with open(f"{os.getcwd()}\\{self.file}", "r", encoding="UTF-8") as f:
-				return loads(f.read())
+				return load(f)
 
-	def loadImage(self, file) -> None:
+	def loadImage(self, file) -> bytes:
 		with open(file, "rb") as f:
 			return f.read()
+		
+	def encodeImage(self, data) -> str:
+		return base64.b64encode(data).decode("ascii")
+
+	def decodeImage(self, data) -> bytes:
+		return base64.b64decode(data)
